@@ -15,6 +15,23 @@ quarterRows.forEach((row, index) => {
   addColumn(row, index, growth);
 });
 
+yearRows.forEach((row, index) => {
+  let growth = calculateGrowth(row, index,1,5);
+  addColumn(row, index, growth);
+});
+
+balancesheetRows.forEach((row, index) => {
+  let growth = calculateGrowth(row, index,1,5);
+  addColumn(row, index, growth);
+});
+
+cashflowRows.forEach((row, index) => {
+  let growth = calculateGrowth(row, index,1,5);
+  addColumn(row, index, growth);
+});
+
+
+
 function getRows() {
     const quarterRows = quarterswise.querySelectorAll("tr");
     const yearRows = yearwise.querySelectorAll(
