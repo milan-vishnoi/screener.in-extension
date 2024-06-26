@@ -16,17 +16,17 @@ quarterRows.forEach((row, index) => {
 });
 
 yearRows.forEach((row, index) => {
-  let growth = calculateGrowth(row, index,1,5);
+  let growth = calculateGrowth(row, index,1,2);
   addColumn(row, index, growth);
 });
 
 balancesheetRows.forEach((row, index) => {
-  let growth = calculateGrowth(row, index,1,5);
+  let growth = calculateGrowth(row, index,1,2);
   addColumn(row, index, growth);
 });
 
 cashflowRows.forEach((row, index) => {
-  let growth = calculateGrowth(row, index,1,5);
+  let growth = calculateGrowth(row, index,1,2);
   addColumn(row, index, growth);
 });
 
