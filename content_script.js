@@ -11,7 +11,6 @@ console.log("balancesheet Rows:" + balancesheetRows.length);
 console.log("cashflow Rows:" + cashflowRows.length);
 
 quarterRows.forEach((row, index) => {
-  //let growth = calculate(quarterswise,index);
   let growth = calculateGrowth(row, index,1,5);
   addColumn(row, index, growth);
 });
@@ -26,11 +25,6 @@ function getRows() {
     return { quarterRows, yearRows, balancesheetRows, cashflowRows };
 }
 
-// for(let i = 1; i <= 11; i++)
-// {
-//     let growth = calculate(quarterswise,i);
-//     buildColumn(quarterswise,i, growth);
-// }
 
 function addColumn(row, index, value) {
   if (index == 0) {
@@ -59,18 +53,6 @@ function buildColumn(section, i, growth) {
   newDataCell.textContent = growth.toPrecision(4) + "%";
   newRow.appendChild(newDataCell);
 }
-
-// function calculate(section,i) {
-//     console.log("Calculating Growth");
-//     let latestQtrCell = section.querySelector('tr:nth-child(' + i + ') td:last-child').textContent.trim().replace(',', '');
-//     let latestQtrRevenue = parseFloat(latestQtrCell);
-//     console.log("Latest: ₹"+latestQtrRevenue);
-//     let previousYearCell = section.querySelector('tr:nth-child(' + i + ') td:nth-last-child(5)').textContent.trim().replace(',', '');
-//     let previouYearRevenue = parseFloat(previousYearCell);
-//     console.log("Previous: ₹"+previouYearRevenue);
-//     let growth = calculateGrowth(latestQtrRevenue, previouYearRevenue);
-//     return growth;
-// }
 
 function calculateGrowth(row, index, latestRowNumber, previousRowNumber) {
   if (index === 0) {
