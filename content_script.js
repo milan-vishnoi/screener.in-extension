@@ -10,50 +10,73 @@ console.log("yearwise Rows:" + yearRows.length);
 console.log("balancesheet Rows:" + balancesheetRows.length);
 console.log("cashflow Rows:" + cashflowRows.length);
 
-const updateQuarterSection =  () => {
+const updateQuarterSection = (columnExist) => {
+  if (columnExist) {
+    const resultColumn = quarterswise
+      .querySelectorAll("tr td:last-child,th:last-child")
+      .forEach((item) => item.remove());
+  }
   quarterRows.forEach((row, index) => {
-    let growth = calculateGrowth(row, index,1,5);
+    let growth = calculateGrowth(row, index, 1, 5);
     addColumn(row, index, growth);
   });
-} ;
+};
 
-const updateYearSection =  () => {
+const updateYearSection = (columnExist) => {
+  if (columnExist) {
+    const resultColumn = yearwise
+      .querySelectorAll("tr td:last-child,th:last-child")
+      .forEach((item) => item.remove());
+  }
   yearRows.forEach((row, index) => {
-    let growth = calculateGrowth(row, index,1,2);
+    let growth = calculateGrowth(row, index, 1, 2);
     addColumn(row, index, growth);
   });
-} ;
+};
 
-const updateBalanceSheetSection =  () => {
+const updateBalanceSheetSection = (columnExist) => {
+  if (columnExist) {
+    const resultColumn = balancesheet
+      .querySelectorAll("tr td:last-child,th:last-child")
+      .forEach((item) => item.remove());
+  }
   balancesheetRows.forEach((row, index) => {
-    let growth = calculateGrowth(row, index,1,2);
+    let growth = calculateGrowth(row, index, 1, 2);
     addColumn(row, index, growth);
   });
-} ;
+};
 
-const updateCashFlowSection =  () => {
+const updateCashFlowSection = (columnExist) => {
+  if (columnExist) {
+    const resultColumn = cashflow
+      .querySelectorAll("tr td:last-child,th:last-child")
+      .forEach((item) => item.remove());
+  }
   cashflowRows.forEach((row, index) => {
-    let growth = calculateGrowth(row, index,1,2);
+    let growth = calculateGrowth(row, index, 1, 2);
     addColumn(row, index, growth);
   });
-} ;
+};
 
-quarterswise.addEventListener("click",updateQuarterSection);
-yearwise.addEventListener("click",updateYearSection);
-balancesheet.addEventListener("click",updateBalanceSheetSection);
-cashflow.addEventListener("click",updateCashFlowSection);
+updateQuarterSection(false);
+updateYearSection(false);
+updateBalanceSheetSection(false);
+updateCashFlowSection(false);
 
+quarterswise.addEventListener("click", () => updateQuarterSection(true));
+yearwise.addEventListener("click", updateYearSection(true));
+balancesheet.addEventListener("click", updateBalanceSheetSection(true));
+cashflow.addEventListener("click", updateCashFlowSection(true));
 
 function getRows() {
-    const quarterRows = quarterswise.querySelectorAll("tr");
-    const yearRows = yearwise.querySelectorAll(
-        ".data-table.responsive-text-nowrap tr"
-    );
-    const balancesheetRows = balancesheet.querySelectorAll("tr");
-    const cashflowRows = cashflow.querySelectorAll("tr");
-    return { quarterRows, yearRows, balancesheetRows, cashflowRows };
+  const quarterRows = quarterswise.querySelectorAll("tr");
+  const yearRows = yearwise.querySelectorAll(
+    ".data-table.responsive-text-nowrap tr"
+  );
+  const balancesheetRows = balancesheet.querySelectorAll("tr");
+  const cashflowRows = cashflow.querySelectorAll("tr");
+  return { quarterRows, yearRows, balancesheetRows, cashflowRows };
 }
-
 
 function addColumn(row, index, value) {
   if (index == 0) {
