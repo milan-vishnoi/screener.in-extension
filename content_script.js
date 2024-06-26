@@ -10,26 +10,38 @@ console.log("yearwise Rows:" + yearRows.length);
 console.log("balancesheet Rows:" + balancesheetRows.length);
 console.log("cashflow Rows:" + cashflowRows.length);
 
-quarterRows.forEach((row, index) => {
-  let growth = calculateGrowth(row, index,1,5);
-  addColumn(row, index, growth);
-});
+const updateQuarterSection =  () => {
+  quarterRows.forEach((row, index) => {
+    let growth = calculateGrowth(row, index,1,5);
+    addColumn(row, index, growth);
+  });
+} ;
 
-yearRows.forEach((row, index) => {
-  let growth = calculateGrowth(row, index,1,2);
-  addColumn(row, index, growth);
-});
+const updateYearSection =  () => {
+  yearRows.forEach((row, index) => {
+    let growth = calculateGrowth(row, index,1,2);
+    addColumn(row, index, growth);
+  });
+} ;
 
-balancesheetRows.forEach((row, index) => {
-  let growth = calculateGrowth(row, index,1,2);
-  addColumn(row, index, growth);
-});
+const updateBalanceSheetSection =  () => {
+  balancesheetRows.forEach((row, index) => {
+    let growth = calculateGrowth(row, index,1,2);
+    addColumn(row, index, growth);
+  });
+} ;
 
-cashflowRows.forEach((row, index) => {
-  let growth = calculateGrowth(row, index,1,2);
-  addColumn(row, index, growth);
-});
+const updateCashFlowSection =  () => {
+  cashflowRows.forEach((row, index) => {
+    let growth = calculateGrowth(row, index,1,2);
+    addColumn(row, index, growth);
+  });
+} ;
 
+quarterswise.addEventListener("click",updateQuarterSection);
+yearwise.addEventListener("click",updateYearSection);
+balancesheet.addEventListener("click",updateBalanceSheetSection);
+cashflow.addEventListener("click",updateCashFlowSection);
 
 
 function getRows() {
@@ -71,19 +83,19 @@ function buildColumn(section, i, growth) {
   newRow.appendChild(newDataCell);
 }
 
-function calculateGrowth(row, index, latestRowNumber, previousRowNumber) {
+function calculateGrowth(row, index, latestColumnNumber, previousColumnNumber) {
   if (index === 0) {
     return;
   } else {
     console.log("Calculating Growth");
     let latestCell = row
-      .querySelector(`td:nth-last-child(${latestRowNumber})`)
+      .querySelector(`td:nth-last-child(${latestColumnNumber})`)
       .innerText.trim()
       .replace(",", "");
     let latestValue = parseFloat(latestCell);
     console.log("Latest: ₹" + latestValue);
     let previousCell = row
-      .querySelector(`td:nth-last-child(${previousRowNumber})`)
+      .querySelector(`td:nth-last-child(${previousColumnNumber})`)
       .innerText.trim()
       .replace(",", "");
     let previousValue = parseFloat(previousCell);
