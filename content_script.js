@@ -12,7 +12,7 @@ console.log("cashflow Rows:" + cashflowRows.length);
 
 quarterRows.forEach((row, index) => {
   //let growth = calculate(quarterswise,index);
-  let growth = calculate(row, index);
+  let growth = calculateGrowth(row, index,1,5);
   addColumn(row, index, growth);
 });
 
@@ -72,28 +72,28 @@ function buildColumn(section, i, growth) {
 //     return growth;
 // }
 
-function calculate(row, index) {
+function calculateGrowth(row, index, latestRowNumber, previousRowNumber) {
   if (index === 0) {
     return;
   } else {
     console.log("Calculating Growth");
-    let latestQtrCell = row
-      .querySelector("td:nth-last-child(1)")
+    let latestCell = row
+      .querySelector(`td:nth-last-child(${latestRowNumber})`)
       .innerText.trim()
       .replace(",", "");
-    let latestQtrRevenue = parseFloat(latestQtrCell);
-    console.log("Latest: ₹" + latestQtrRevenue);
-    let previousYearCell = row
-      .querySelector("td:nth-last-child(5)")
+    let latestValue = parseFloat(latestCell);
+    console.log("Latest: ₹" + latestValue);
+    let previousCell = row
+      .querySelector(`td:nth-last-child(${previousRowNumber})`)
       .innerText.trim()
       .replace(",", "");
-    let previouYearRevenue = parseFloat(previousYearCell);
-    console.log("Previous: ₹" + previouYearRevenue);
-    let growth = calculateGrowth(latestQtrRevenue, previouYearRevenue);
+    let previousValue = parseFloat(previousCell);
+    console.log("Previous: ₹" + previousValue);
+    let growth = calculateChange(latestValue, previousValue);
     return growth;
   }
 }
 
-function calculateGrowth(latest, previous) {
+function calculateChange(latest, previous) {
   return ((latest - previous) / previous) * 100;
 }
