@@ -3,26 +3,31 @@ const yearwise = document.getElementById("profit-loss");
 const balancesheet = document.getElementById("balance-sheet");
 const cashflow = document.getElementById("cash-flow");
 
-const { quarterRows, yearRows, balancesheetRows, cashflowRows } = getRows();
-
-console.log("Quarter Rows:" + quarterRows.length);
-console.log("yearwise Rows:" + yearRows.length);
-console.log("balancesheet Rows:" + balancesheetRows.length);
-console.log("cashflow Rows:" + cashflowRows.length);
+// console.log("Quarter Rows:" + quarterRows.length);
+// console.log("yearwise Rows:" + yearRows.length);
+// console.log("balancesheet Rows:" + balancesheetRows.length);
+// console.log("cashflow Rows:" + cashflowRows.length);
 
 const updateQuarterSection = (columnExist) => {
+  const {quarterRows} = getRows();
+  console.log("Within quarter");
   if (columnExist) {
     const resultColumn = quarterswise
       .querySelectorAll("tr td:last-child,th:last-child")
       .forEach((item) => item.remove());
   }
   quarterRows.forEach((row, index) => {
-    let growth = calculateGrowth(row, index, 1, 5);
-    addColumn(row, index, growth);
+    let yoyGrowth = calculateGrowth(row, index, 1, 5);
+    let qoqGrowth = calculateGrowth(row, index, 1, 2);
+    addColumn(row, index, yoyGrowth);
+    addQoQColumn(row,index,qoqGrowth);
+  
   });
 };
 
 const updateYearSection = (columnExist) => {
+  const {yearRows} = getRows();
+  console.log("Within year");
   if (columnExist) {
     const resultColumn = yearwise
       .querySelectorAll("tr td:last-child,th:last-child")
@@ -35,6 +40,8 @@ const updateYearSection = (columnExist) => {
 };
 
 const updateBalanceSheetSection = (columnExist) => {
+  const {balancesheetRows} = getRows();
+  console.log("Within balancesheet");
   if (columnExist) {
     const resultColumn = balancesheet
       .querySelectorAll("tr td:last-child,th:last-child")
@@ -47,6 +54,8 @@ const updateBalanceSheetSection = (columnExist) => {
 };
 
 const updateCashFlowSection = (columnExist) => {
+  const {cashflowRows} = getRows();
+  console.log("Within cashflow");
   if (columnExist) {
     const resultColumn = cashflow
       .querySelectorAll("tr td:last-child,th:last-child")
@@ -90,6 +99,18 @@ function addColumn(row, index, value) {
   }
 }
 
+function addQoQColumn(row, index, value) {
+  if (index == 0) {
+    const newHeaderCell = document.createElement("th");
+    newHeaderCell.innerText = "QoQ Growth";
+    row.appendChild(newHeaderCell);
+  } else {
+    const newDataCell = document.createElement("td");
+    newDataCell.innerText = value.toPrecision(4) + "%";
+    row.appendChild(newDataCell);
+  }
+}
+
 console.log("extension run");
 
 function buildColumn(section, i, growth) {
@@ -110,19 +131,16 @@ function calculateGrowth(row, index, latestColumnNumber, previousColumnNumber) {
   if (index === 0) {
     return;
   } else {
-    console.log("Calculating Growth");
     let latestCell = row
       .querySelector(`td:nth-last-child(${latestColumnNumber})`)
       .innerText.trim()
       .replace(",", "");
     let latestValue = parseFloat(latestCell);
-    console.log("Latest: ₹" + latestValue);
     let previousCell = row
       .querySelector(`td:nth-last-child(${previousColumnNumber})`)
       .innerText.trim()
       .replace(",", "");
     let previousValue = parseFloat(previousCell);
-    console.log("Previous: ₹" + previousValue);
     let growth = calculateChange(latestValue, previousValue);
     return growth;
   }
