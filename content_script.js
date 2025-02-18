@@ -3,19 +3,26 @@ const yearwise = document.getElementById("profit-loss");
 const balancesheet = document.getElementById("balance-sheet");
 const cashflow = document.getElementById("cash-flow");
 
-// console.log("Quarter Rows:" + quarterRows.length);
-// console.log("yearwise Rows:" + yearRows.length);
-// console.log("balancesheet Rows:" + balancesheetRows.length);
-// console.log("cashflow Rows:" + cashflowRows.length);
+
+const addRows = () => {
+  const {quarterRows} = getRows();
+  const {yearRows} = getRows();
+  addEBIDTARow(quarterRows[3],quarterRows[5]);
+  addEBIDTARow(yearRows[3],yearRows[5]);
+};
 
 const updateQuarterSection = (columnExist) => {
   const {quarterRows} = getRows();
   console.log("Within quarter");
   if (columnExist) {
-    const resultColumn = quarterswise
+       quarterswise
+      .querySelectorAll("tr td:last-child,th:last-child")
+      .forEach((item) => item.remove());
+      quarterswise
       .querySelectorAll("tr td:last-child,th:last-child")
       .forEach((item) => item.remove());
   }
+
   quarterRows.forEach((row, index) => {
     let yoyGrowth = calculateGrowth(row, index, 1, 5);
     let qoqGrowth = calculateGrowth(row, index, 1, 2);
@@ -67,6 +74,7 @@ const updateCashFlowSection = (columnExist) => {
   });
 };
 
+addRows();
 updateQuarterSection(false);
 updateYearSection(false);
 updateBalanceSheetSection(false);
@@ -111,21 +119,41 @@ function addQoQColumn(row, index, value) {
   }
 }
 
+function addEBIDTARow(operatingProfitRow, otherIncomeRow) {
+  const operatingProfit = operatingProfitRow.querySelectorAll("td");
+  const otherIncome = otherIncomeRow.querySelectorAll("td");
+  console.log("Within addEBIDTARow");
+
+   const ebitdaRow = document.createElement("tr");
+   const newRowHeader = document.createElement("td");
+   newRowHeader.innerHTML = "<strong>EBITDA</strong>";
+   newRowHeader.classList.add("text");
+   ebitdaRow.appendChild(newRowHeader);
+   for(let i=1; i<operatingProfit.length;i++)
+   {
+       const newRowValue = document.createElement("td");
+       let value = parseFloat(operatingProfit[i].innerText.trim().replace(",", "")) + 
+                   parseFloat(otherIncome[i].innerText.trim().replace(",", ""));
+       newRowValue.innerHTML = `<strong>${value}</strong>`; 
+       ebitdaRow.appendChild(newRowValue);
+   }
+    otherIncomeRow.insertAdjacentElement("afterend",ebitdaRow);
+ }
 console.log("extension run");
 
-function buildColumn(section, i, growth) {
-  if (i == 1) {
-    let theadRow = section.querySelector("thead tr");
-    let newHeaderCell = document.createElement("th");
-    newHeaderCell.textContent = "YoY Growth";
-    theadRow.appendChild(newHeaderCell);
-  }
+// function buildColumn(section, i, growth) {
+//   if (i == 1) {
+//     let theadRow = section.querySelector("thead tr");
+//     let newHeaderCell = document.createElement("th");
+//     newHeaderCell.textContent = "YoY Growth";
+//     theadRow.appendChild(newHeaderCell);
+//   }
 
-  let newRow = section.querySelector("tbody tr:nth-child(" + i + ")");
-  let newDataCell = document.createElement("td");
-  newDataCell.textContent = growth.toPrecision(4) + "%";
-  newRow.appendChild(newDataCell);
-}
+//   let newRow = section.querySelector("tbody tr:nth-child(" + i + ")");
+//   let newDataCell = document.createElement("td");
+//   newDataCell.textContent = growth.toPrecision(4) + "%";
+//   newRow.appendChild(newDataCell);
+// }
 
 function calculateGrowth(row, index, latestColumnNumber, previousColumnNumber) {
   if (index === 0) {
