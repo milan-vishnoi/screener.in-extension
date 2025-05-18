@@ -3,22 +3,21 @@ const yearwise = document.getElementById("profit-loss");
 const balancesheet = document.getElementById("balance-sheet");
 const cashflow = document.getElementById("cash-flow");
 
-
 const addRows = () => {
-  const {quarterRows} = getRows();
-  const {yearRows} = getRows();
-  addEBIDTARow(quarterRows[3],quarterRows[5]);
-  addEBIDTARow(yearRows[3],yearRows[5]);
+  const { quarterRows } = getRows();
+  const { yearRows } = getRows();
+  addEBIDTARow(quarterRows[3], quarterRows[5]);
+  addEBIDTARow(yearRows[3], yearRows[5]);
 };
 
 const updateQuarterSection = (columnExist) => {
-  const {quarterRows} = getRows();
+  const { quarterRows } = getRows();
   console.log("Within quarter");
   if (columnExist) {
-       quarterswise
+    quarterswise
       .querySelectorAll("tr td:last-child,th:last-child")
       .forEach((item) => item.remove());
-      quarterswise
+    quarterswise
       .querySelectorAll("tr td:last-child,th:last-child")
       .forEach((item) => item.remove());
   }
@@ -27,13 +26,12 @@ const updateQuarterSection = (columnExist) => {
     let yoyGrowth = calculateGrowth(row, index, 1, 5);
     let qoqGrowth = calculateGrowth(row, index, 1, 2);
     addColumn(row, index, yoyGrowth);
-    addQoQColumn(row,index,qoqGrowth);
-  
+    addQoQColumn(row, index, qoqGrowth);
   });
 };
 
 const updateYearSection = (columnExist) => {
-  const {yearRows} = getRows();
+  const { yearRows } = getRows();
   console.log("Within year");
   if (columnExist) {
     const resultColumn = yearwise
@@ -47,7 +45,7 @@ const updateYearSection = (columnExist) => {
 };
 
 const updateBalanceSheetSection = (columnExist) => {
-  const {balancesheetRows} = getRows();
+  const { balancesheetRows } = getRows();
   console.log("Within balancesheet");
   if (columnExist) {
     const resultColumn = balancesheet
@@ -61,7 +59,7 @@ const updateBalanceSheetSection = (columnExist) => {
 };
 
 const updateCashFlowSection = (columnExist) => {
-  const {cashflowRows} = getRows();
+  const { cashflowRows } = getRows();
   console.log("Within cashflow");
   if (columnExist) {
     const resultColumn = cashflow
@@ -74,6 +72,7 @@ const updateCashFlowSection = (columnExist) => {
   });
 };
 
+console.log("Calling Initial functions");
 addRows();
 updateQuarterSection(false);
 updateYearSection(false);
@@ -81,9 +80,9 @@ updateBalanceSheetSection(false);
 updateCashFlowSection(false);
 
 quarterswise.addEventListener("click", () => updateQuarterSection(true));
-yearwise.addEventListener("click", updateYearSection(true));
-balancesheet.addEventListener("click", updateBalanceSheetSection(true));
-cashflow.addEventListener("click", updateCashFlowSection(true));
+yearwise.addEventListener("click", () => updateYearSection(true));
+balancesheet.addEventListener("click",() => updateBalanceSheetSection(true));
+cashflow.addEventListener("click", () => updateCashFlowSection(true));
 
 function getRows() {
   const quarterRows = quarterswise.querySelectorAll("tr");
@@ -124,21 +123,21 @@ function addEBIDTARow(operatingProfitRow, otherIncomeRow) {
   const otherIncome = otherIncomeRow.querySelectorAll("td");
   console.log("Within addEBIDTARow");
 
-   const ebitdaRow = document.createElement("tr");
-   const newRowHeader = document.createElement("td");
-   newRowHeader.innerHTML = "<strong>EBITDA</strong>";
-   newRowHeader.classList.add("text");
-   ebitdaRow.appendChild(newRowHeader);
-   for(let i=1; i<operatingProfit.length;i++)
-   {
-       const newRowValue = document.createElement("td");
-       let value = parseFloat(operatingProfit[i].innerText.trim().replace(",", "")) + 
-                   parseFloat(otherIncome[i].innerText.trim().replace(",", ""));
-       newRowValue.innerHTML = `<strong>${value.toFixed(2)}</strong>`; 
-       ebitdaRow.appendChild(newRowValue);
-   }
-    otherIncomeRow.insertAdjacentElement("afterend",ebitdaRow);
- }
+  const ebitdaRow = document.createElement("tr");
+  const newRowHeader = document.createElement("td");
+  newRowHeader.innerHTML = "<strong>EBITDA</strong>";
+  newRowHeader.classList.add("text");
+  ebitdaRow.appendChild(newRowHeader);
+  for (let i = 1; i < operatingProfit.length; i++) {
+    const newRowValue = document.createElement("td");
+    let value =
+      parseFloat(operatingProfit[i].innerText.trim().replace(",", "")) +
+      parseFloat(otherIncome[i].innerText.trim().replace(",", ""));
+    newRowValue.innerHTML = `<strong>${value.toFixed(2)}</strong>`;
+    ebitdaRow.appendChild(newRowValue);
+  }
+  otherIncomeRow.insertAdjacentElement("afterend", ebitdaRow);
+}
 console.log("extension run");
 
 // function buildColumn(section, i, growth) {
@@ -166,7 +165,7 @@ function calculateGrowth(row, index, latestColumnNumber, previousColumnNumber) {
     let latestValue = parseFloat(latestCell);
     let previousCell = row
       .querySelector(`td:nth-last-child(${previousColumnNumber})`)
-      .innerText.trim()
+      .innerText?.trim()
       .replace(",", "");
     let previousValue = parseFloat(previousCell);
     let growth = calculateChange(latestValue, previousValue);
