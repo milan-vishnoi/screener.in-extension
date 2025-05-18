@@ -134,7 +134,7 @@ function addEBIDTARow(operatingProfitRow, otherIncomeRow) {
        const newRowValue = document.createElement("td");
        let value = parseFloat(operatingProfit[i].innerText.trim().replace(",", "")) + 
                    parseFloat(otherIncome[i].innerText.trim().replace(",", ""));
-       newRowValue.innerHTML = `<strong>${value}</strong>`; 
+       newRowValue.innerHTML = `<strong>${value.toFixed(2)}</strong>`; 
        ebitdaRow.appendChild(newRowValue);
    }
     otherIncomeRow.insertAdjacentElement("afterend",ebitdaRow);
