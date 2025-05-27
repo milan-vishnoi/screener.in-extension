@@ -1,2 +1,2 @@
-# screener.in-extension
-Created this for publishing the code written for an extension on screener.in
+# Stock Analysis Extension
+Created this for publishing the code written for helping in analyzing the stocks on screener.in
