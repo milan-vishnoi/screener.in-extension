@@ -78,9 +78,11 @@ updateQuarterSection(false);
 updateYearSection(false);
 updateBalanceSheetSection(false);
 updateCashFlowSection(false);
+window.extractNotes();
 
 quarterswise.addEventListener("click", () => updateQuarterSection(true));
 yearwise.addEventListener("click", () => updateYearSection(true));
+
 balancesheet.addEventListener("click",() => updateBalanceSheetSection(true));
 cashflow.addEventListener("click", () => updateCashFlowSection(true));
 

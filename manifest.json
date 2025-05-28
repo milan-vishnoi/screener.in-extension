@@ -8,7 +8,7 @@
     "content_scripts": [
       {
         "matches": ["https://www.screener.in/company/*"],
-        "js": ["content_script.js"]
+        "js": ["extractNotes.js","content_script.js"]
       }
     ]
   

@@ -1,4 +1,6 @@
-(function() {
+window.extractNotes = async function extractNotes() {
+
+  console.log("Withing exported function extract Notes");
   // --- Constants for PDF Layout ---
   const PDF_MARGIN = 10; // mm
   const PDF_MAX_WIDTH = 180; // mm (210 - 2 * 10 = 190, so 180 leaves 10mm on each side)
@@ -224,4 +226,4 @@ console.log(dateText+" "+hiddenHTML);
 
   // Initiate the export process
   exportPDF();
-})();
+}
