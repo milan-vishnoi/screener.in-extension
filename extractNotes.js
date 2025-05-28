@@ -10,19 +10,19 @@ window.extractNotes = async function extractNotes() {
   var content = {};
 
   // --- Helper to load external scripts dynamically ---
-  function loadScript(url) {
-    return new Promise((resolve, reject) => {
-      if (window.jspdf) {
-        resolve();
-        return;
-      }
-      const script = document.createElement('script');
-      script.src = url;
-      script.onload = () => resolve();
-      script.onerror = () => reject(new Error('Failed to load script ' + url));
-      document.head.appendChild(script);
-    });
-  }
+  // function loadScript(url) {
+  //   return new Promise((resolve, reject) => {
+  //     if (window.jspdf) {
+  //       resolve();
+  //       return;
+  //     }
+  //     const script = document.createElement('script');
+  //     script.src = url;
+  //     script.onload = () => resolve();
+  //     script.onerror = () => reject(new Error('Failed to load script ' + url));
+  //     document.head.appendChild(script);
+  //   });
+  // }
 
   // --- HTML to Styled Text Segments Converter ---
   // Returns an array of { text: string, bold: boolean }
@@ -183,7 +183,7 @@ console.log(dateText+" "+hiddenHTML);
 
   // --- Main PDF Export Function ---
   async function exportPDF() {
-    await loadScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
+   // await loadScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
     const { jsPDF } = window.jspdf;
 
     const notebookContents = document.querySelectorAll('.notebook-content');
