@@ -78,7 +78,7 @@ updateQuarterSection(false);
 updateYearSection(false);
 updateBalanceSheetSection(false);
 updateCashFlowSection(false);
-window.extractNotes();
+//window.extractNotes();
 
 quarterswise.addEventListener("click", () => updateQuarterSection(true));
 yearwise.addEventListener("click", () => updateYearSection(true));
@@ -178,3 +178,13 @@ function calculateGrowth(row, index, latestColumnNumber, previousColumnNumber) {
 function calculateChange(latest, previous) {
   return ((latest - previous) / previous) * 100;
 }
+
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('button[data-url^="/notebook/"]');
+  if (!btn) return;              // click was on something else
+
+  console.log('Notebook button clicked');
+  setTimeout(window.extractNotes,5000);
+
+
+});
