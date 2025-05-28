@@ -8,8 +8,13 @@
     "content_scripts": [
       {
         "matches": ["https://www.screener.in/company/*"],
-        "js": ["extractNotes.js","content_script.js"]
+        "js": ["js/libs/jspdf.umd.min.js","extractNotes.js","content_script.js"]
       }
-    ]
-  
+    ],
+  "web_accessible_resources": [
+    {
+      "resources": ["js/libs/jspdf.umd.min.js"],
+      "matches": ["<all_urls>"]
+    }
+  ]
 }
